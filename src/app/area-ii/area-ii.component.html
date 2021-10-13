@@ -1,0 +1,36 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Area: II</h1>
+  <h1 class="mat-h1">Total MCQ: {{quizzes.length}}</h1>
+  <mat-form-field class="form-field w-100" appearance="outline">
+    <mat-label>Search...</mat-label>
+    <input matInput type="text" [(ngModel)]="filterTerm">
+    <button *ngIf="filterTerm" matSuffix mat-icon-button aria-label="Clear" (click)="filterTerm=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-card *ngFor="let quiz of quizzes | searchFilter:filterTerm ; index as i; trackBy: trackByQuestion"  class = "b-10">
+    <table class="styled-table">
+      <thead>
+      <tr>
+        <th>{{quiz.number}}</th>
+        <th><p class="ow" [innerText]="quiz.question"></p></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngIf="quiz.additional != null">
+        <td></td>
+        <td [innerText]="quiz.additional"></td>
+      </tr>
+      <tr *ngFor="let option of quiz.options | keyvalue">
+        <td [ngClass]="{'bk-yellow': option.key === quiz.answer}" style="width: 20px">{{option.key}}</td>
+        <td class="ow" [innerText]="option.value"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td class="c-1">Answer: {{quiz.answer}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-card>
+</div>
